@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather App</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  </head>
+
+  <body>
+    <%= yield %>
+    <script>
+    function activatePlacesSearch(){
+    	var autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            { types: ['(cities)']}
+            );
+	}
+	</script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0d8OeeouYrv3-7G8LNTnMmOjBSWu6--U&libraries=places&callback=activatePlacesSearch" async defer>   
+  	</script>
+  </body>
+</html>

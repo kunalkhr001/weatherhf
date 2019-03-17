@@ -1,0 +1,246 @@
+<link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+<div id="main">
+	<div>
+		<%= text_field_tag :search1, params[:search1], placeholder: "Enter Location", id:'autocomplete' %>
+    </div>
+    <span>
+    	<%= submit_tag "Search", :onclick => "displayWeather()", id:'btn' %> 
+    </span>
+</div> 
+
+<div id="wInfo">
+	<div id="wt1" class="card">
+	</div>
+	<div id="wt2" class="card">
+	</div>
+	<div id="wt3" class="card">
+	</div>
+	<div id="wt4" class="card">
+	</div>
+
+</div>
+
+<div id="hist">
+	<h3>Historical Interpretation</h3>
+</div>
+
+<div id="charts">
+<div id="curve_chart1" style="width: 500px; height: 400px" class="curve"></div>
+<div id="curve_chart2" style="width: 500px; height: 400px" class="curve"></div>
+<div id="curve_chart3" style="width: 500px; height: 400px" class="curve"></div>
+<div id="curve_chart4" style="width: 500px; height: 400px" class="curve"></div>
+<div id="curve_chart5" style="width: 500px; height: 400px" class="curve"></div>
+<div id="curve_chart6" style="width: 500px; height: 400px" class="curve"></div>
+<div id="curve_chart7" style="width: 500px; height: 400px" class="curve"></div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>	
+<script type="text/javascript">
+function displayWeather()
+{
+	document.getElementById("wt1").style.backgroundImage="none";
+	document.getElementById("wt1").style.border="none";
+	//document.getElementById("wt1").style.boxShadow="none";
+    document.getElementById("wt2").style.backgroundImage="none";
+    document.getElementById("wt2").style.border="none";
+    //document.getElementById("wt2").style.boxShadow="none";
+    document.getElementById("wt3").style.backgroundImage="none";
+    document.getElementById("wt3").style.border="none";
+    //document.getElementById("wt3").style.boxShadow="none";
+    document.getElementById("wt4").style.backgroundImage="none";
+	document.getElementById("wt4").style.border="none";
+	//document.getElementById("wt4").style.boxShadow="none";
+	document.getElementById("hist").style.display = "none";
+	var x = document.getElementById("autocomplete").value;
+	url="http://api.apixu.com/v1/forecast.json?key=be9747c8d4d44a3c933154613191403&days=4&q=";
+	url=url+x;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+	var i;
+	for(i=1;i<=4;i++){
+	    var myNode = document.getElementById("wt"+i);
+		while (myNode.firstChild) {
+	    	myNode.removeChild(myNode.firstChild);
+		}
+	}
+    var status = xhr.status;
+    if (status == 200) 
+    {
+        //callback(null, xhr.response);
+        //console.log(xhr.response);
+        j=xhr.response;
+        day1=(j["forecast"]["forecastday"][0]);
+        day2=(j["forecast"]["forecastday"][1]);
+         day3=(j["forecast"]["forecastday"][2]);
+        day4=(j["forecast"]["forecastday"][3]);
+        for (i=1;i<=4;i++)
+        {
+        	var curr;
+        	if(i==1)
+        	{
+        		curr=day1;
+        	}
+        	else if(i==2)
+        	{
+        		curr=day2;
+        	}
+        	else if(i==3)
+        	{
+        		curr=day3;
+        	}
+        	else 
+        	{
+        		curr=day4;
+        	}
+        	var d=document.getElementById("wt"+i);
+        	d.style.backgroundImage ="none";
+        	var para0 = document.createElement("p");
+			var today = new Date(curr["date"]);
+			var node0 = document.createTextNode(today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear());
+			para0.appendChild(node0);
+        	var para1 = document.createElement("p");
+			var node1 = document.createTextNode("Min Temperature: "+curr["day"]["mintemp_c"]+String.fromCharCode(8451));
+			para1.appendChild(node1);
+			var para2 = document.createElement("p");
+			var node2 = document.createTextNode("Max Temperature: "+curr["day"]["maxtemp_c"]+String.fromCharCode(8451));
+			para2.appendChild(node2);
+			var para3= document.createElement("p");
+			var node3 = document.createTextNode("Precipitation: "+curr["day"]["totalprecip_mm"]+"mm");
+			para3.appendChild(node3);
+			var para4 = document.createElement("p");
+			var node4 = document.createTextNode("Humidity: "+curr["day"]["avghumidity"]);
+			para4.appendChild(node4);
+			var dB= document.createElement("div");
+			dB.style.height="3px";
+			dB.style.background="red";
+			d.appendChild(para0);
+			d.appendChild(dB);
+			d.appendChild(para1);
+			d.appendChild(para2);
+			d.appendChild(para3);
+			d.appendChild(para4);
+			if(curr["day"]["condition"]["text"].includes("cloud")===true)
+				d.style.backgroundImage = "url(<%= asset_path('cloud.jpg') %>)";
+
+			else if(curr["day"]["condition"]["text"].includes("rain")===true)
+				d.style.backgroundImage = "url(<%= asset_path('rain.jpg') %>)";
+			else if(curr["day"]["condition"]["text"].includes("snow")===true)
+				d.style.backgroundImage = "url(<%= asset_path('snow1.jpg') %>)";
+			else
+				d.style.backgroundImage = "url(<%= asset_path('sun.jpg') %>)";
+			d.style.backgroundRepeat = "no-repeat";
+
+
+        }
+    	
+
+        		//console.log(a1);
+        		
+        	  google.charts.load('current', {'packages':['corechart']});
+		      google.charts.setOnLoadCallback(drawChart);
+		      function drawChart() {
+		      	//getValues();
+		      	
+		      	var x = document.getElementById("autocomplete").value;
+		      	
+		      	var currDate1= new Date();
+		      	var jc;
+		      	var count=1;
+		      	for(jc=1;jc<=7;jc++)
+		      	{
+			      	var dt;
+			      	currDate1.setDate(currDate1.getDate()-1);
+			      	if(currDate1.getDate()<10 && currDate1.getMonth()+1<10)
+			      		dt= currDate1.getFullYear()+'-0'+(currDate1.getMonth()+1)+'-0'+currDate1.getDate();
+					else if(currDate1.getDate()<10)
+						dt= currDate1.getFullYear()+'-'+(currDate1.getMonth()+1)+'-0'+currDate1.getDate();
+					else if(currDate1.getMonth()+1<10)
+						dt= currDate1.getFullYear()+'-0'+(currDate1.getMonth()+1)+'-'+currDate1.getDate();
+					//console.log(dt);
+						url="http://api.apixu.com/v1/history.json?key=be9747c8d4d44a3c933154613191403";
+						url=url+"&dt=";
+						url=url+dt;
+						url=url+"&q="
+						x=x.replace(/\s/g, "")
+						url=url+x;
+						//console.log(url);
+					    const xhr2 = new XMLHttpRequest();
+					    xhr2.open('GET', url, true);
+					    //yy=xhr2.open('GET', url, true);
+					    //console.log(yy);
+					    //var jx;
+					    
+					    xhr2.responseType = 'json';
+					    //console.log(yy);
+					    let j2;
+					    xhr2.onload = function() {
+							var status2=xhr2.status;
+							if(status2==200)
+							{
+								//console.log(a1);
+								j2=xhr2.response;
+								var data = google.visualization.arrayToDataTable([
+			          ['Factors',j2["forecast"]["forecastday"][0]["date"],],
+			          ['Min Temp',j2["forecast"]["forecastday"][0]["day"]["mintemp_c"]],
+			          ['Max Temp',j2["forecast"]["forecastday"][0]["day"]["maxtemp_c"]],
+			          ['Precipitation',j2["forecast"]["forecastday"][0]["day"]["totalprecip_mm"]],
+			          ['Humidity',j2["forecast"]["forecastday"][0]["day"]["avghumidity"]]
+			        ]);
+						//console.log(jx);
+			      	
+			        
+
+			        var options = {
+			          title: '',
+			          curveType: 'function',
+			          legend: { position: 'bottom' },
+			          hAxis: {
+	        			title: 'Factor'
+	    				},
+			          vAxis: {
+	        			title: 'Value',
+	        			ticks: [10, 20, 30, 40, 50, 60]
+	    				}
+	    			  
+			        };
+
+			        var idC='curve_chart'+count;
+			        console.log(idC);
+			        count=count+1;
+			        var chart = new google.visualization.LineChart(document.getElementById(idC));
+
+			        chart.draw(data, options);
+								//getJx(j2);
+								//console.log(a1[a1.length-1]);
+								
+								
+							}
+							else
+							{
+								console.log(url);
+								//callback(status2);
+							}
+						};
+						xhr2.send();
+						console.log(j2);
+					
+		      	//console.log(a1[2]);
+		      	//console.log(a2[1]);
+		      	//console.log(a3[3]);
+		      	//console.log(a4[6]);
+		      }
+		    }
+
+    } 
+    else {
+        callback(status);
+    }
+};
+	xhr.send();
+    document.getElementById("wInfo").style.display = "flex";
+    document.getElementById("hist").style.display = "block";
+    //document.getElementById("chart_lines").style.display="block";
+};
+</script>

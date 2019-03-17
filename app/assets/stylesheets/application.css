@@ -1,0 +1,107 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+body
+{
+	/* background-image: url(bg3.jpg); */
+	background-image: linear-gradient(to right, rgba(0,0,255,0), rgba(255,255,0,1));
+}
+
+#autocomplete
+{
+	width: 250px;
+	height: 50px;
+	text-align: center;
+	background: transparent;
+	border: none;
+	border-bottom: 2px solid #1976D2;
+	margin-bottom: 10px;
+	outline: none;
+}
+
+#btn
+{
+	background: transparent;
+	border: 2px solid white;
+	border-radius: 25px;
+	height: 50px;
+	width: 100px;
+	cursor: pointer;
+	margin-bottom: 30px;
+	color: gray;
+}
+
+#btn:focus {
+  outline: none;
+}
+
+#wInfo
+{
+	display: none;
+	justify-content: space-around;
+	text-align: center;
+}
+
+#main
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* top: 45%; 
+	left: 42%;
+	position: absolute;
+	*/
+}
+
+#charts
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.card
+{	
+	border: 1px solid #BFBFBF;
+	border-radius: 10px;
+	box-shadow: 8px 9px 6px -6px black;
+	width: 210px;
+	height: 260px;
+	padding: 2px;
+	opacity: 0.9;
+	margin-bottom: 5%;
+}
+
+p{
+	font-family: 'Fjalla One', sans-serif;
+	font-size: 13px;
+}
+
+#hist
+{
+	font-family: 'Fjalla One', sans-serif;
+	display: none;
+	text-align: center;
+}
+
+.curve
+{
+	margin-bottom: 1%;
+}
+#chart_lines
+{
+	display: none;
+}
