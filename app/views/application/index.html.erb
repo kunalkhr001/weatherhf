@@ -176,13 +176,13 @@ function displayWeather()
 					    
 					    xhr2.responseType = 'json';
 					    //console.log(yy);
-					    let j2;
+					    
 					    xhr2.onload = function() {
 							var status2=xhr2.status;
 							if(status2==200)
 							{
 								//console.log(a1);
-								j2=xhr2.response;
+								var j2=xhr2.response;
 								var data = google.visualization.arrayToDataTable([
 			          ['Factors',j2["forecast"]["forecastday"][0]["date"],],
 			          ['Min Temp',j2["forecast"]["forecastday"][0]["day"]["mintemp_c"]],
@@ -209,7 +209,7 @@ function displayWeather()
 			        };
 
 			        var idC='curve_chart'+count;
-			        console.log(idC);
+			        //console.log(idC);
 			        count=count+1;
 			        var chart = new google.visualization.LineChart(document.getElementById(idC));
 
