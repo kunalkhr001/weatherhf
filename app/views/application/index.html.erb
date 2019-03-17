@@ -52,7 +52,7 @@ function displayWeather()
 	//document.getElementById("wt4").style.boxShadow="none";
 	document.getElementById("hist").style.display = "none";
 	var x = document.getElementById("autocomplete").value;
-	url="http://api.apixu.com/v1/forecast.json?key=be9747c8d4d44a3c933154613191403&days=4&q=";
+	url="https://api.apixu.com/v1/forecast.json?key=be9747c8d4d44a3c933154613191403&days=4&q=";
 	url=url+x;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
@@ -159,7 +159,7 @@ function displayWeather()
 					else if(currDate1.getMonth()+1<10)
 						dt= currDate1.getFullYear()+'-0'+(currDate1.getMonth()+1)+'-'+currDate1.getDate();
 					//console.log(dt);
-						url="http://api.apixu.com/v1/history.json?key=be9747c8d4d44a3c933154613191403";
+						url="https://api.apixu.com/v1/history.json?key=be9747c8d4d44a3c933154613191403";
 						url=url+"&dt=";
 						url=url+dt;
 						url=url+"&q="
