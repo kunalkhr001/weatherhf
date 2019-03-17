@@ -143,7 +143,7 @@ function displayWeather()
 		      function drawChart() {
 		      	//getValues();
 		      	
-		      	var x = document.getElementById("autocomplete").value;
+		      	
 		      	
 		      	var currDate1= new Date();
 		      	var jc;
@@ -162,9 +162,11 @@ function displayWeather()
 						url="https://api.apixu.com/v1/history.json?key=be9747c8d4d44a3c933154613191403";
 						url=url+"&dt=";
 						url=url+dt;
-						url=url+"&q="
-						x=x.replace(/\s/g, "")
+						url=url+"&q=";
+						var x = document.getElementById("autocomplete").value;
+						x=x.replace(/\s/g, "");
 						url=url+x;
+						console.log(url);
 						//console.log(url);
 					    const xhr2 = new XMLHttpRequest();
 					    xhr2.open('GET', url, true);
