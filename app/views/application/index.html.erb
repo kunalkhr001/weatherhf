@@ -183,6 +183,7 @@ function displayWeather()
 							{
 								//console.log(a1);
 								var j2=xhr2.response;
+								console.log(j2);
 								var data = google.visualization.arrayToDataTable([
 			          ['Factors',j2["forecast"]["forecastday"][0]["date"],],
 			          ['Min Temp',j2["forecast"]["forecastday"][0]["day"]["mintemp_c"]],
@@ -226,7 +227,7 @@ function displayWeather()
 							}
 						};
 						xhr2.send();
-						console.log(j2);
+						
 					
 		      	//console.log(a1[2]);
 		      	//console.log(a2[1]);
